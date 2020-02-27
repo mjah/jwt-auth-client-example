@@ -5,7 +5,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history', // read https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
-  routers: [
+  routes: [
     {
       name: "home",
       path: "/",
@@ -37,9 +37,9 @@ export default new Router({
       component: () => import("@/views/Confirm")
     },
     {
-      name: "profile",
-      path: "/profile",
-      component: () => import("@/views/restricted/Profile")
+      name: "account",
+      path: "/account",
+      component: () => import("@/views/restricted/Account")
     },
     {
       name: "protected",
