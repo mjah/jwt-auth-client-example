@@ -1,0 +1,8 @@
+export const CHECK_AUTH = "checkAuth"
+export const SIGNIN = "signin"
+export const SIGNUP = "signup"
+export const SIGNOUT = "SIGNOUT"
+export const FORGOTPASSWORD = "forgotpassword"
+export const RESETPASSWORD = "resetpassword"
+export const CONFIRM_USER = "confirmUser"
+export const UPDATE_USER = "updateUser"
