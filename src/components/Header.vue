@@ -17,7 +17,7 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'signup' }">
-                Register
+                Sign Up
               </router-link>
             </li>
             <li class="nav-item">

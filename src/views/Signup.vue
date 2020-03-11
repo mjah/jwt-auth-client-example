@@ -40,7 +40,7 @@
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
-                type="text"
+                type="email"
                 v-model="email"
                 placeholder="Email"
               />
@@ -64,7 +64,37 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+import { SIGNUP } from "@/store/actions.type"
+
 export default {
   name: "Signup",
+  data() {
+    return {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      password: ""
+    };
+  },
+  computed: {
+    ...mapState({
+      errors: state => state.auth.errors
+    })
+  },
+  methods: {
+    onSubmit() {
+      this.$store
+        .dispatch(SIGNUP, {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          username: this.username,
+          email: this.email,
+          password: this.password
+        })
+        .then(() => this.$router.push({ name: "home" }))
+    }
+  }
 }
 </script>

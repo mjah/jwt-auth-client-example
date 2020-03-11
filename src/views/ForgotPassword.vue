@@ -16,9 +16,9 @@
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
-                type="password"
-                v-model="password"
-                placeholder="Password"
+                type="email"
+                v-model="email"
+                placeholder="Email"
               />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">

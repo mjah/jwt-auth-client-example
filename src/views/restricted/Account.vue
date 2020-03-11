@@ -35,7 +35,7 @@
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
-                type="text"
+                type="email"
                 v-model="email"
                 placeholder="Email"
               />

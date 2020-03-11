@@ -22,19 +22,19 @@ export default new Router({
       component: () => import("@/views/Signup")
     },
     {
-      name: "forgotpassword",
-      path: "/forgotpassword",
+      name: "forgot_password",
+      path: "/forgot_password",
       component: () => import("@/views/ForgotPassword")
     },
     {
-      name: "resetpassword",
-      path: "/resetpassword",
+      name: "reset_password",
+      path: "/reset_password",
       component: () => import("@/views/ResetPassword")
     },
     {
-      name: "confirm",
-      path: "/confirm",
-      component: () => import("@/views/Confirm")
+      name: "confirm_email",
+      path: "/confirm_email",
+      component: () => import("@/views/ConfirmEmail")
     },
     {
       name: "account",
