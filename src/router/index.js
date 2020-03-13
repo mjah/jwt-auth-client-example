@@ -17,6 +17,11 @@ export default new Router({
       component: () => import("@/views/Signin")
     },
     {
+      name: "signout",
+      path: "/signout",
+      component: () => import("@/views/Signout")
+    },
+    {
       name: "signup",
       path: "/signup",
       component: () => import("@/views/Signup")

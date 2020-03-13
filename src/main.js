@@ -4,7 +4,19 @@ import router from "./router"
 import store from "./store"
 import "./registerServiceWorker"
 
-Vue.config.productionTip = false
+import { CHECK_AUTH } from "@/store/actions.type";
+import ApiService from "@/common/api.service";
+
+if (process.env.NODE_ENV == "production") {
+  Vue.config.productionTip = false
+}
+
+ApiService.init();
+
+router.beforeEach((to, from, next) => {
+  if (to.name == 'signout') next()
+  else Promise.all([store.dispatch(CHECK_AUTH)]).then(next)
+});
 
 new Vue({
   router,

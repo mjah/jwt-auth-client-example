@@ -10,7 +10,7 @@
             </router-link>
           </p>
           <ul v-if="errors" class="error-messages">
-            <li v-for="(v, k) in errors" :key="k">{{ k }} {{ v | error }}</li>
+            <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
           </ul>
           <form @submit.prevent="onSubmit">
             <fieldset class="form-group">
@@ -32,7 +32,7 @@
             <fieldset class="form-group">
               <input
                 type="checkbox"
-                v-model="remember_me"
+                v-model="rememberMe"
                 id="remember_me"
                 name="remember_me"
                 value="remember">
@@ -43,7 +43,7 @@
             </button>
           </form>
           <p class="text-xs-center">
-            <router-link :to="{ name: 'forgotpassword' }">
+            <router-link :to="{ name: 'forgot_password' }">
               Forgot password
             </router-link>
           </p>
@@ -54,7 +54,38 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import store from "@/store"
+import { SIGNIN } from "@/store/actions.type";
+
 export default {
   name: "Signin",
+  beforeRouteEnter(to, from, next) {
+    if (store.state.auth.isAuthenticated) next({ name: "home" })
+    else next()
+  },
+  data() {
+    return {
+      email: null,
+      password: null,
+      rememberMe: false
+    }
+  },
+  computed: {
+    ...mapState({
+      errors: state => state.auth.errors
+    })
+  },
+  methods: {
+    onSubmit() {
+      this.$store
+        .dispatch(SIGNIN, {
+          email: this.email,
+          password: this.password,
+          remember_me: this.rememberMe
+        })
+        .then(() => this.$router.push({ name: "home" }))
+    }
+  }
 }
 </script>

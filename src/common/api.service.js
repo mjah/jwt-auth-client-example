@@ -2,6 +2,7 @@ import Vue from "vue"
 import VueAxios from "vue-axios"
 import axios from "axios"
 import JwtService from "@/common/jwt.service"
+import { REFRESH_TOKEN } from "@/common/jwt.service"
 import { API_URL } from "@/common/config"
 
 const ApiService = {
@@ -24,67 +25,64 @@ const ApiService = {
         return Promise.reject(error)
     })
   },
-  setHeader() {
-    Vue.axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${JwtService.getToken()}`
+  get(resource, config = null) {
+    return Vue.axios.get(resource, config)
   },
-  get(resource) {
-    return Vue.axios.get(resource).catch(error => {
-      throw new Error(error)
-    })
+  post(resource, data, config = null) {
+    return Vue.axios.post(resource, data, config)
   },
-  post(resource, params) {
-    return Vue.axios.post(resource, params).catch(error => {
-      throw new Error(error)
-    })
+  patch(resource, data, config = null) {
+    return Vue.axios.patch(resource, data, config)
   },
-  patch(resource, params) {
-    return Vue.axios.patch(resource, params).catch(error => {
-      throw new Error(error)
-    })
-  },
-  delete(resource) {
-    return Vue.axios.delete(resource).catch(error => {
-      throw new Error(error)
-    })
+  delete(resource, config = null) {
+    return Vue.axios.delete(resource, config)
   }
 }
 
 export default ApiService
 
 export const AuthService = {
-  signup(params) {
-    return ApiService.post("/v1/auth/signup", params)
+  setRefreshTokenAuthorization() {
+    return {
+      headers: {
+        Authorization: `Bearer ${JwtService.getToken(REFRESH_TOKEN)}`
+      }
+    }
   },
-  signin(params) {
-    return ApiService.post("/v1/auth/signin", params)
+  signup(data) {
+    return ApiService.post("/v1/auth/signup", data)
   },
-  confirmEmail(params) {
-    return ApiService.post("/v1/auth/confirm_email", params)
+  signin(data) {
+    return ApiService.post("/v1/auth/signin", data)
   },
-  resetPassword(params) {
-    return ApiService.post("/v1/auth/reset_password", params)
+  confirmEmail(data) {
+    return ApiService.post("/v1/auth/confirm_email", data)
   },
-  sendConfirmEmail(params) {
-    return ApiService.post("/v1/auth/send_confirm_email", params)
+  resetPassword(data) {
+    return ApiService.post("/v1/auth/reset_password", data)
   },
-  sendResetPassword(params) {
-    return ApiService.post("/v1/auth/send_reset_password", params)
+  sendConfirmEmail(data) {
+    return ApiService.post("/v1/auth/send_confirm_email", data)
+  },
+  sendResetPassword(data) {
+    return ApiService.post("/v1/auth/send_reset_password", data)
+  },
+  userDetails() {
+    return ApiService.get("/v1/auth/user_details", this.setRefreshTokenAuthorization())
   },
   signout() {
-    return ApiService.get("/v1/auth/signout")
+    return ApiService.get("/v1/auth/signout", this.setRefreshTokenAuthorization())
   },
   signoutAll() {
-    return ApiService.get("/v1/auth/signout_all")
+    return ApiService.get("/v1/auth/signout_all", this.setRefreshTokenAuthorization())
   },
   refreshToken() {
-    return ApiService.get("/v1/auth/refresh_token")
+    return ApiService.get("/v1/auth/refresh_token", this.setRefreshTokenAuthorization())
   },
-  update(params) {
-    return ApiService.patch("/v1/auth/update", params)
+  update(data) {
+    return ApiService.patch("/v1/auth/update", data, this.setRefreshTokenAuthorization())
   },
   delete() {
-    return ApiService.post("/v1/auth/delete")
+    return ApiService.post("/v1/auth/delete", null, this.setRefreshTokenAuthorization())
   }
 }

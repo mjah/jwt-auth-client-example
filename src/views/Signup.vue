@@ -65,10 +65,15 @@
 
 <script>
 import { mapState } from "vuex"
+import store from "@/store"
 import { SIGNUP } from "@/store/actions.type"
 
 export default {
   name: "Signup",
+  beforeRouteEnter(to, from, next) {
+    if (store.state.auth.isAuthenticated) next({ name: "home" })
+    else next()
+  },
   data() {
     return {
       firstname: "",

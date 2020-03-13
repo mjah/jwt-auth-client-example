@@ -59,7 +59,13 @@
 </template>
 
 <script>
+import store from "@/store"
+
 export default {
   name: "Account",
+  beforeRouteEnter(to, from, next) {
+    if (store.state.auth.isAuthenticated) next()
+    else next({ name: "home" })
+  },
 }
 </script>
