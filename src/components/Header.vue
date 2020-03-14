@@ -23,6 +23,11 @@
           </ul>
           <ul v-else class="navbar-nav ml-auto">
             <li class="nav-item">
+              <a class="nav-link">
+                Hello {{ currentUser.FirstName }} {{ currentUser.LastName }}!
+              </a>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'protected' }">
                 Protected
               </router-link>
@@ -33,7 +38,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'signout' }">
+              <router-link class="nav-link" :to="{ name: 'signout_all' }">
                 Sign Out
               </router-link>
             </li>

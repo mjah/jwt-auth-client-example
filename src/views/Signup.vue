@@ -2,7 +2,7 @@
   <div class="auth-page">
     <div class="container page">
       <div class="row">
-        <div class="col-md-6 offset-md-3 col-xs-12">
+        <div v-if="!isSignedUp" class="col-md-6 offset-md-3 col-xs-12">
           <h1 class="text-xs-center">Sign up</h1>
           <p class="text-xs-center">
             <router-link :to="{ name: 'signin' }">
@@ -10,7 +10,7 @@
             </router-link>
           </p>
           <ul v-if="errors" class="error-messages">
-            <li v-for="(v, k) in errors" :key="k">{{ k }} {{ v | error }}</li>
+            <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
           </ul>
           <form @submit.prevent="onSubmit">
             <fieldset class="form-group">
@@ -58,6 +58,15 @@
             </button>
           </form>
         </div>
+        <div v-else class="col-md-6 offset-md-3 col-xs-12">
+          <h1>Account registered.</h1>
+          <p> Please check your email inbox to confirm your email address.</p>
+          <p>
+            <router-link :to="{ name: 'signin' }">
+              Sign In
+            </router-link>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +85,7 @@ export default {
   },
   data() {
     return {
+      isSignedUp: false,
       firstname: "",
       lastname: "",
       username: "",
@@ -92,13 +102,16 @@ export default {
     onSubmit() {
       this.$store
         .dispatch(SIGNUP, {
-          firstname: this.firstname,
-          lastname: this.lastname,
+          first_name: this.firstname,
+          last_name: this.lastname,
           username: this.username,
           email: this.email,
-          password: this.password
+          password: this.password,
+          confirm_email_url: "https://www.domain.com/confirm"
         })
-        .then(() => this.$router.push({ name: "home" }))
+        .then(() => {
+          this.isSignedUp = true
+        })
     }
   }
 }

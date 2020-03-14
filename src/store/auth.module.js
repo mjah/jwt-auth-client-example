@@ -8,7 +8,8 @@ import {
   CHECK_AUTH,
   SIGNUP,
   SIGNIN,
-  SIGNOUT
+  SIGNOUT,
+  SIGNOUT_ALL
 } from "@/store/actions.type"
 import {
   SET_REFRESH_TOKEN,
@@ -20,7 +21,7 @@ import {
 
 const state = {
   errors: null,
-  user: {},
+  user: null,
   isAuthenticated: !!JwtService.getToken(REFRESH_TOKEN)
 }
 
@@ -41,7 +42,7 @@ const actions = {
           context.commit(SET_USER, response.data.details)
         })
         .catch(error => {
-          context.commit(SET_ERROR, [error.response.data.message.Description])
+          context.commit(SET_ERROR, error.response.data.error)
           context.commit(PURGE_AUTH)
         })
     } else {
@@ -57,30 +58,53 @@ const actions = {
           resolve(response)
         })
         .catch(error => {
-          context.commit(SET_ERROR, [error.response.data.message.Description])
+          context.commit(SET_ERROR, error.response.data.error)
         })
     })
   },
   [SIGNUP](context, payload) {
     return new Promise(resolve => {
-      AuthService.signup({payload})
+      AuthService.signup(payload)
         .then(response => {
-          context.commit(SET_USER, response.access_token)
           resolve(response)
         })
         .catch(error => {
-          context.commit(SET_ERROR, error.response.data.message.Description)
+          context.commit(SET_ERROR, error.response.data.error)
         })
     })
   },
   [SIGNOUT](context) {
-    context.commit(PURGE_AUTH)
+    return new Promise(resolve => {
+      AuthService.signout()
+        .then(response => {
+          context.commit(PURGE_AUTH)
+          resolve(response)
+        })
+        .catch(error => {
+          context.commit(PURGE_AUTH)
+          context.commit(SET_ERROR, error.response.data.error)
+        })
+    })
+  },
+  [SIGNOUT_ALL](context) {
+    return new Promise(resolve => {
+      AuthService.signoutAll()
+        .then(response => {
+          context.commit(PURGE_AUTH)
+          resolve(response)
+        })
+        .catch(error => {
+          context.commit(PURGE_AUTH)
+          context.commit(SET_ERROR, error.response.data.error)
+        })
+    })
   }
 }
 
 const mutations = {
   [SET_ERROR](state, error) {
-    state.errors = error
+    if (typeof error.Description !== "undefined") state.errors = [error.Description]
+    else state.errors = ["An error has occurred."]
   },
   [SET_REFRESH_TOKEN](state, refreshToken) {
     JwtService.saveToken(REFRESH_TOKEN, refreshToken)
@@ -95,7 +119,7 @@ const mutations = {
   },
   [PURGE_AUTH](state) {
     state.errors = null
-    state.user = {}
+    state.user = null
     state.isAuthenticated = false
     JwtService.destroyToken(REFRESH_TOKEN)
     JwtService.destroyToken(ACCESS_TOKEN)

@@ -22,6 +22,11 @@ export default new Router({
       component: () => import("@/views/Signout")
     },
     {
+      name: "signout_all",
+      path: "/signout_all",
+      component: () => import("@/views/Signout")
+    },
+    {
       name: "signup",
       path: "/signup",
       component: () => import("@/views/Signup")
