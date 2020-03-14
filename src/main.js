@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'production') {
 ApiService.init();
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'signout') next();
+  if (to.name === 'signout' || to.name === 'signout_all') next();
   else Promise.all([store.dispatch(CHECK_AUTH)]).then(next);
 });
 

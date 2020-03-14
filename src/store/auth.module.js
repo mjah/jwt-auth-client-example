@@ -1,6 +1,6 @@
 import { AuthService } from '@/common/api.service';
 import JwtService from '@/common/jwt.service';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/common/jwt.service';
+import { ACCESS_TOKEN } from '@/common/jwt.service';
 import {
   CHECK_AUTH,
   SIGNUP,
@@ -9,17 +9,24 @@ import {
   SIGNOUT_ALL
 } from '@/store/actions.type';
 import {
-  SET_REFRESH_TOKEN,
   SET_ACCESS_TOKEN,
   SET_USER,
   SET_ERROR,
   PURGE_AUTH
 } from '@/store/mutations.type';
 
+const nullUser = {
+  FirstName: null,
+  LastName: null,
+  Email: null,
+  Username: null,
+  IsConfirmedEmail: null
+};
+
 const state = {
   errors: null,
-  user: null,
-  isAuthenticated: !!JwtService.getToken(REFRESH_TOKEN)
+  user: nullUser,
+  isAuthenticated: !!JwtService.getToken(ACCESS_TOKEN)
 };
 
 const getters = {
@@ -33,7 +40,7 @@ const getters = {
 
 const actions = {
   [CHECK_AUTH](context) {
-    if (JwtService.getToken(REFRESH_TOKEN)) {
+    if (JwtService.getToken(ACCESS_TOKEN)) {
       AuthService.userDetails()
         .then(response => {
           context.commit(SET_USER, response.data.details);
@@ -50,7 +57,6 @@ const actions = {
     return new Promise(resolve => {
       AuthService.signin(payload)
         .then(response => {
-          context.commit(SET_REFRESH_TOKEN, response.data.refresh_token);
           context.commit(SET_ACCESS_TOKEN, response.data.access_token);
           resolve(response);
         })
@@ -104,9 +110,6 @@ const mutations = {
       state.errors = [error.Description];
     else state.errors = ['An error has occurred.'];
   },
-  [SET_REFRESH_TOKEN](state, refreshToken) {
-    JwtService.saveToken(REFRESH_TOKEN, refreshToken);
-  },
   [SET_ACCESS_TOKEN](state, accessToken) {
     JwtService.saveToken(ACCESS_TOKEN, accessToken);
   },
@@ -117,9 +120,8 @@ const mutations = {
   },
   [PURGE_AUTH](state) {
     state.errors = null;
-    state.user = null;
+    state.user = nullUser;
     state.isAuthenticated = false;
-    JwtService.destroyToken(REFRESH_TOKEN);
     JwtService.destroyToken(ACCESS_TOKEN);
   }
 };

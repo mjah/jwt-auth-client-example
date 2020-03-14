@@ -1,5 +1,4 @@
 export const ACCESS_TOKEN = 'accessToken';
-export const REFRESH_TOKEN = 'refreshToken';
 
 export const getToken = tokenId => {
   return window.localStorage.getItem(tokenId);

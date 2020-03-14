@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
-import JwtService from '@/common/jwt.service';
-import { REFRESH_TOKEN } from '@/common/jwt.service';
 import { API_URL } from '@/common/config';
 
 const ApiService = {
@@ -43,67 +41,61 @@ const ApiService = {
 export default ApiService;
 
 export const AuthService = {
-  setRefreshTokenAuthorization() {
+  getDefaultConfig() {
     return {
-      headers: {
-        Authorization: `Bearer ${JwtService.getToken(REFRESH_TOKEN)}`
-      }
+      withCredentials: true
     };
   },
   signup(data) {
-    return ApiService.post('/v1/auth/signup', data);
+    return ApiService.post('/v1/auth/signup', data, this.getDefaultConfig());
   },
   signin(data) {
-    return ApiService.post('/v1/auth/signin', data);
+    return ApiService.post('/v1/auth/signin', data, this.getDefaultConfig());
   },
   confirmEmail(data) {
-    return ApiService.post('/v1/auth/confirm_email', data);
+    return ApiService.post(
+      '/v1/auth/confirm_email',
+      data,
+      this.getDefaultConfig()
+    );
   },
   resetPassword(data) {
-    return ApiService.post('/v1/auth/reset_password', data);
+    return ApiService.post(
+      '/v1/auth/reset_password',
+      data,
+      this.getDefaultConfig()
+    );
   },
   sendConfirmEmail(data) {
-    return ApiService.post('/v1/auth/send_confirm_email', data);
+    return ApiService.post(
+      '/v1/auth/send_confirm_email',
+      data,
+      this.getDefaultConfig()
+    );
   },
   sendResetPassword(data) {
-    return ApiService.post('/v1/auth/send_reset_password', data);
+    return ApiService.post(
+      '/v1/auth/send_reset_password',
+      data,
+      this.getDefaultConfig()
+    );
   },
   userDetails() {
-    return ApiService.get(
-      '/v1/auth/user_details',
-      this.setRefreshTokenAuthorization()
-    );
+    return ApiService.get('/v1/auth/user_details', this.getDefaultConfig());
   },
   signout() {
-    return ApiService.get(
-      '/v1/auth/signout',
-      this.setRefreshTokenAuthorization()
-    );
+    return ApiService.get('/v1/auth/signout', this.getDefaultConfig());
   },
   signoutAll() {
-    return ApiService.get(
-      '/v1/auth/signout_all',
-      this.setRefreshTokenAuthorization()
-    );
+    return ApiService.get('/v1/auth/signout_all', this.getDefaultConfig());
   },
   refreshToken() {
-    return ApiService.get(
-      '/v1/auth/refresh_token',
-      this.setRefreshTokenAuthorization()
-    );
+    return ApiService.get('/v1/auth/refresh_token', this.getDefaultConfig());
   },
   update(data) {
-    return ApiService.patch(
-      '/v1/auth/update',
-      data,
-      this.setRefreshTokenAuthorization()
-    );
+    return ApiService.patch('/v1/auth/update', data, this.getDefaultConfig());
   },
   delete() {
-    return ApiService.post(
-      '/v1/auth/delete',
-      null,
-      this.setRefreshTokenAuthorization()
-    );
+    return ApiService.delete('/v1/auth/delete', this.getDefaultConfig());
   }
 };
