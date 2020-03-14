@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import { SIGNOUT, SIGNOUT_ALL } from "@/store/actions.type"
+import { SIGNOUT, SIGNOUT_ALL } from '@/store/actions.type';
 
 export default {
-  name: "Signout",
+  name: 'Signout',
   data() {
     return {
       isSignoutAll: false
@@ -20,14 +20,14 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (!vm.$store.state.auth.isAuthenticated) {
-        next({ name: "home" })
-      } else if (to.name === "signout_all") {
-        vm.isSignoutAll = true
-        vm.$store.dispatch(SIGNOUT_ALL).then(next)
+        next({ name: 'home' });
+      } else if (to.name === 'signout_all') {
+        vm.isSignoutAll = true;
+        vm.$store.dispatch(SIGNOUT_ALL).then(next);
       } else {
-        vm.$store.dispatch(SIGNOUT).then(next)
+        vm.$store.dispatch(SIGNOUT).then(next);
       }
-    })
-  },
-}
+    });
+  }
+};
 </script>

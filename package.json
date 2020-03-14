@@ -24,7 +24,27 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1",
     "vue-template-compiler": "^2.6.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "prettier --single-quote --write",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "eslintConfig": {
     "root": true,

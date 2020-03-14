@@ -33,6 +33,6 @@
 
 <script>
 export default {
-  name: "ForgotPassword",
-}
+  name: 'ForgotPassword'
+};
 </script>

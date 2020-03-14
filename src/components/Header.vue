@@ -5,7 +5,15 @@
         <router-link class="navbar-brand" :to="{ name: 'home' }">
           JWT Auth Client Example
         </router-link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -38,7 +46,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'signout_all' }">
+              <router-link class="nav-link" :to="{ name: 'signout' }">
                 Sign Out
               </router-link>
             </li>
@@ -50,12 +58,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "Header",
+  name: 'Header',
   computed: {
-    ...mapGetters(["currentUser", "isAuthenticated"])
+    ...mapGetters(['currentUser', 'isAuthenticated'])
   }
-}
+};
 </script>

@@ -35,7 +35,8 @@
                 v-model="rememberMe"
                 id="remember_me"
                 name="remember_me"
-                value="remember">
+                value="remember"
+              />
               <label for="remember_me">Remember me</label>
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">
@@ -54,22 +55,22 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import store from "@/store"
-import { SIGNIN } from "@/store/actions.type";
+import { mapState } from 'vuex';
+import store from '@/store';
+import { SIGNIN } from '@/store/actions.type';
 
 export default {
-  name: "Signin",
+  name: 'Signin',
   beforeRouteEnter(to, from, next) {
-    if (store.state.auth.isAuthenticated) next({ name: "home" })
-    else next()
+    if (store.state.auth.isAuthenticated) next({ name: 'home' });
+    else next();
   },
   data() {
     return {
       email: null,
       password: null,
       rememberMe: false
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -84,8 +85,8 @@ export default {
           password: this.password,
           remember_me: this.rememberMe
         })
-        .then(() => this.$router.push({ name: "home" }))
+        .then(() => this.$router.push({ name: 'home' }));
     }
   }
-}
+};
 </script>

@@ -60,7 +60,7 @@
         </div>
         <div v-else class="col-md-6 offset-md-3 col-xs-12">
           <h1>Account registered.</h1>
-          <p> Please check your email inbox to confirm your email address.</p>
+          <p>Please check your email inbox to confirm your email address.</p>
           <p>
             <router-link :to="{ name: 'signin' }">
               Sign In
@@ -73,24 +73,24 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
-import store from "@/store"
-import { SIGNUP } from "@/store/actions.type"
+import { mapState } from 'vuex';
+import store from '@/store';
+import { SIGNUP } from '@/store/actions.type';
 
 export default {
-  name: "Signup",
+  name: 'Signup',
   beforeRouteEnter(to, from, next) {
-    if (store.state.auth.isAuthenticated) next({ name: "home" })
-    else next()
+    if (store.state.auth.isAuthenticated) next({ name: 'home' });
+    else next();
   },
   data() {
     return {
       isSignedUp: false,
-      firstname: "",
-      lastname: "",
-      username: "",
-      email: "",
-      password: ""
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: '',
+      password: ''
     };
   },
   computed: {
@@ -107,12 +107,12 @@ export default {
           username: this.username,
           email: this.email,
           password: this.password,
-          confirm_email_url: "https://www.domain.com/confirm"
+          confirm_email_url: 'https://www.domain.com/confirm'
         })
         .then(() => {
-          this.isSignedUp = true
-        })
+          this.isSignedUp = true;
+        });
     }
   }
-}
+};
 </script>

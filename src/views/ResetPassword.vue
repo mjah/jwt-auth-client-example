@@ -28,6 +28,6 @@
 
 <script>
 export default {
-  name: "ResetPassword",
-}
+  name: 'ResetPassword'
+};
 </script>

@@ -3,11 +3,18 @@
     <div class="container">
       <span class="text-muted">
         An example client for
-        <a rel="noopener noreferrer" target="blank" href="https://github.com/mjah/jwt-auth"
-          >jwt-auth</a>.
-        Source on
-        <a rel="noopener noreferrer" target="blank" href="https://github.com/mjah/jwt-auth-client-example"
-          >GitHub</a>.
+        <a
+          rel="noopener noreferrer"
+          target="blank"
+          href="https://github.com/mjah/jwt-auth"
+          >jwt-auth</a
+        >. Source on
+        <a
+          rel="noopener noreferrer"
+          target="blank"
+          href="https://github.com/mjah/jwt-auth-client-example"
+          >GitHub</a
+        >.
       </span>
     </div>
   </footer>
@@ -21,6 +28,6 @@
 
 <script>
 export default {
-  name: "Footer"
-}
+  name: 'Footer'
+};
 </script>
