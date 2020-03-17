@@ -7,22 +7,6 @@ const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
     Vue.axios.defaults.baseURL = API_URL;
-
-    Vue.axios.interceptors.request.use(request => {
-      console.log('Request: ', request);
-      return request;
-    });
-
-    Vue.axios.interceptors.response.use(
-      response => {
-        console.log('Response: ', response);
-        return response;
-      },
-      error => {
-        console.log('Error: ', error.response);
-        return Promise.reject(error);
-      }
-    );
   },
   get(resource, config = null) {
     return Vue.axios.get(resource, config);

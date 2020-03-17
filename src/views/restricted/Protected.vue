@@ -1,7 +1,10 @@
 <template>
   <div class="protected-page">
     <div class="container">
-      <h1 class="title">This page is protected.</h1>
+      <h1 class="title">Call a protected API using the access token.</h1>
+      <p>
+        To-do: Refresh access token automatically if expired or close to expiry.
+      </p>
     </div>
   </div>
 </template>

@@ -54,10 +54,7 @@
                 <span v-if="isConfirmEmailSent">
                   Sent confirm email.
                 </span>
-                <a
-                  v-else
-                  href="javascript:void(0)"
-                  v-on:click="sendConfirmEmail"
+                <a v-else href="javascript:void(0)" @click="sendConfirmEmail"
                   >Resend email.</a
                 >
               </div>
@@ -77,10 +74,16 @@
             </button>
           </form>
           <button
-            v-on:click="deleteUser"
+            @click="deleteUser"
             class="btn btn-lg btn-danger pull-xs-right"
           >
             Delete Account
+          </button>
+          <button
+            @click="signoutEverywhere"
+            class="btn btn-lg btn-warning pull-xs-right"
+          >
+            Signout Everywhere
           </button>
         </div>
       </div>
@@ -96,7 +99,8 @@ import {
   UPDATE_USER,
   CHECK_AUTH,
   SEND_CONFIRM_EMAIL,
-  DELETE_USER
+  DELETE_USER,
+  SIGNOUT_ALL
 } from '@/store/actions.type';
 
 export default {
@@ -143,6 +147,11 @@ export default {
     deleteUser() {
       this.$store
         .dispatch(DELETE_USER)
+        .then(() => this.$router.push({ name: 'home' }));
+    },
+    signoutEverywhere() {
+      this.$store
+        .dispatch(SIGNOUT_ALL)
         .then(() => this.$router.push({ name: 'home' }));
     }
   }
