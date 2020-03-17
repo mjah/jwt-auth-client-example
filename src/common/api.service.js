@@ -1,12 +1,10 @@
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
-import { API_URL } from '@/common/config';
 
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = API_URL;
   },
   get(resource, config = null) {
     return Vue.axios.get(resource, config);
@@ -27,59 +25,52 @@ export default ApiService;
 export const AuthService = {
   getDefaultConfig() {
     return {
+      baseURL: process.env.VUE_APP_AUTH_API,
       withCredentials: true
     };
   },
   signup(data) {
-    return ApiService.post('/v1/auth/signup', data, this.getDefaultConfig());
+    return ApiService.post('/signup', data, this.getDefaultConfig());
   },
   signin(data) {
-    return ApiService.post('/v1/auth/signin', data, this.getDefaultConfig());
+    return ApiService.post('/signin', data, this.getDefaultConfig());
   },
   userDetails() {
-    return ApiService.get('/v1/auth/user_details', this.getDefaultConfig());
+    return ApiService.get('/user', this.getDefaultConfig());
   },
   refreshToken() {
-    return ApiService.get('/v1/auth/refresh_token', this.getDefaultConfig());
+    return ApiService.get('/refresh-token', this.getDefaultConfig());
   },
   signout() {
-    return ApiService.get('/v1/auth/signout', this.getDefaultConfig());
+    return ApiService.get('/signout', this.getDefaultConfig());
   },
   signoutAll() {
-    return ApiService.get('/v1/auth/signout_all', this.getDefaultConfig());
+    return ApiService.get('/signout-all', this.getDefaultConfig());
   },
   sendResetPassword(data) {
     return ApiService.post(
-      '/v1/auth/send_reset_password',
+      '/send-reset-password',
       data,
       this.getDefaultConfig()
     );
   },
   resetPassword(data) {
-    return ApiService.post(
-      '/v1/auth/reset_password',
-      data,
-      this.getDefaultConfig()
-    );
+    return ApiService.post('/reset-password', data, this.getDefaultConfig());
   },
   sendConfirmEmail(data) {
     return ApiService.post(
-      '/v1/auth/send_confirm_email',
+      '/send-confirm-email',
       data,
       this.getDefaultConfig()
     );
   },
   confirmEmail(data) {
-    return ApiService.post(
-      '/v1/auth/confirm_email',
-      data,
-      this.getDefaultConfig()
-    );
+    return ApiService.post('/confirm-email', data, this.getDefaultConfig());
   },
   update(data) {
-    return ApiService.patch('/v1/auth/update', data, this.getDefaultConfig());
+    return ApiService.patch('/user', data, this.getDefaultConfig());
   },
   delete() {
-    return ApiService.delete('/v1/auth/delete', this.getDefaultConfig());
+    return ApiService.delete('/user', this.getDefaultConfig());
   }
 };
