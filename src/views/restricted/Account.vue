@@ -65,6 +65,7 @@
             <fieldset class="form-group">
               <label>Password: </label>
               <input
+                autocomplete="new-password"
                 class="form-control form-control-lg"
                 type="password"
                 v-model="password"

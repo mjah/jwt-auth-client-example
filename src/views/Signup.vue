@@ -47,6 +47,7 @@
             </fieldset>
             <fieldset class="form-group">
               <input
+                autocomplete="new-password"
                 class="form-control form-control-lg"
                 type="password"
                 v-model="password"
