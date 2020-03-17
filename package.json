@@ -6,12 +6,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prettier": "prettier --single-quote --write \"src/**/*.{js,vue}\""
   },
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
-    "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
     "vue-router": "^3.1.6",
