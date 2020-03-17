@@ -107,7 +107,7 @@ export default {
           username: this.username,
           email: this.email,
           password: this.password,
-          confirm_email_url: 'https://www.domain.com/confirm'
+          confirm_email_url: 'http://localhost:8080/confirm_email'
         })
         .then(() => {
           this.isSignedUp = true;

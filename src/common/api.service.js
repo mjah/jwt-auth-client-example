@@ -52,9 +52,21 @@ export const AuthService = {
   signin(data) {
     return ApiService.post('/v1/auth/signin', data, this.getDefaultConfig());
   },
-  confirmEmail(data) {
+  userDetails() {
+    return ApiService.get('/v1/auth/user_details', this.getDefaultConfig());
+  },
+  refreshToken() {
+    return ApiService.get('/v1/auth/refresh_token', this.getDefaultConfig());
+  },
+  signout() {
+    return ApiService.get('/v1/auth/signout', this.getDefaultConfig());
+  },
+  signoutAll() {
+    return ApiService.get('/v1/auth/signout_all', this.getDefaultConfig());
+  },
+  sendResetPassword(data) {
     return ApiService.post(
-      '/v1/auth/confirm_email',
+      '/v1/auth/send_reset_password',
       data,
       this.getDefaultConfig()
     );
@@ -73,24 +85,12 @@ export const AuthService = {
       this.getDefaultConfig()
     );
   },
-  sendResetPassword(data) {
+  confirmEmail(data) {
     return ApiService.post(
-      '/v1/auth/send_reset_password',
+      '/v1/auth/confirm_email',
       data,
       this.getDefaultConfig()
     );
-  },
-  userDetails() {
-    return ApiService.get('/v1/auth/user_details', this.getDefaultConfig());
-  },
-  signout() {
-    return ApiService.get('/v1/auth/signout', this.getDefaultConfig());
-  },
-  signoutAll() {
-    return ApiService.get('/v1/auth/signout_all', this.getDefaultConfig());
-  },
-  refreshToken() {
-    return ApiService.get('/v1/auth/refresh_token', this.getDefaultConfig());
   },
   update(data) {
     return ApiService.patch('/v1/auth/update', data, this.getDefaultConfig());

@@ -6,7 +6,13 @@ import {
   SIGNUP,
   SIGNIN,
   SIGNOUT,
-  SIGNOUT_ALL
+  SIGNOUT_ALL,
+  SEND_RESET_PASSWORD,
+  RESET_PASSWORD,
+  SEND_CONFIRM_EMAIL,
+  CONFIRM_EMAIL,
+  UPDATE_USER,
+  DELETE_USER
 } from '@/store/actions.type';
 import {
   SET_ACCESS_TOKEN,
@@ -53,11 +59,11 @@ const actions = {
       context.commit(PURGE_AUTH);
     }
   },
-  [SIGNIN](context, payload) {
+  [SIGNUP](context, payload) {
     return new Promise(resolve => {
-      AuthService.signin(payload)
+      AuthService.signup(payload)
         .then(response => {
-          context.commit(SET_ACCESS_TOKEN, response.data.access_token);
+          context.commit(SET_ERROR, null);
           resolve(response);
         })
         .catch(error => {
@@ -65,10 +71,12 @@ const actions = {
         });
     });
   },
-  [SIGNUP](context, payload) {
+  [SIGNIN](context, payload) {
     return new Promise(resolve => {
-      AuthService.signup(payload)
+      AuthService.signin(payload)
         .then(response => {
+          context.commit(SET_ERROR, null);
+          context.commit(SET_ACCESS_TOKEN, response.data.access_token);
           resolve(response);
         })
         .catch(error => {
@@ -101,12 +109,85 @@ const actions = {
           context.commit(SET_ERROR, error.response.data.error);
         });
     });
+  },
+  [SEND_RESET_PASSWORD](context, payload) {
+    return new Promise(resolve => {
+      AuthService.sendResetPassword(payload)
+        .then(response => {
+          context.commit(SET_ERROR, null);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(SET_ERROR, error.response.data.error);
+        });
+    });
+  },
+  [RESET_PASSWORD](context, payload) {
+    return new Promise(resolve => {
+      AuthService.resetPassword(payload)
+        .then(response => {
+          context.commit(PURGE_AUTH);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(SET_ERROR, error.response.data.error);
+        });
+    });
+  },
+  [SEND_CONFIRM_EMAIL](context, payload) {
+    return new Promise(resolve => {
+      AuthService.sendConfirmEmail(payload)
+        .then(response => {
+          context.commit(SET_ERROR, null);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(SET_ERROR, error.response.data.error);
+        });
+    });
+  },
+  [CONFIRM_EMAIL](context, payload) {
+    return new Promise(resolve => {
+      AuthService.confirmEmail(payload)
+        .then(response => {
+          context.commit(SET_ERROR, null);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(SET_ERROR, error.response.data.error);
+        });
+    });
+  },
+  [UPDATE_USER](context, payload) {
+    return new Promise(resolve => {
+      AuthService.update(payload)
+        .then(response => {
+          context.commit(SET_ERROR, null);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(SET_ERROR, error.response.data.error);
+        });
+    });
+  },
+  [DELETE_USER](context) {
+    return new Promise(resolve => {
+      AuthService.delete()
+        .then(response => {
+          context.commit(SET_ERROR, null);
+          resolve(response);
+        })
+        .catch(error => {
+          context.commit(SET_ERROR, error.response.data.error);
+        });
+    });
   }
 };
 
 const mutations = {
   [SET_ERROR](state, error) {
-    if (typeof error.Description !== 'undefined')
+    if (error === null) state.errors = null;
+    else if (typeof error.Description !== 'undefined')
       state.errors = [error.Description];
     else state.errors = ['An error has occurred.'];
   },

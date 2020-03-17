@@ -1,9 +1,11 @@
 export const CHECK_AUTH = 'checkAuth';
-export const SIGNIN = 'signin';
 export const SIGNUP = 'signup';
+export const SIGNIN = 'signin';
 export const SIGNOUT = 'signout';
 export const SIGNOUT_ALL = 'signoutAll';
-export const FORGOT_PASSWORD = 'forgotPassword';
+export const SEND_RESET_PASSWORD = 'sendResetPassword';
 export const RESET_PASSWORD = 'resetPassword';
+export const SEND_CONFIRM_EMAIL = 'sendConfirmEmail';
 export const CONFIRM_EMAIL = 'confirmEmail';
 export const UPDATE_USER = 'updateUser';
+export const DELETE_USER = 'deleteUser';

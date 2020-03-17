@@ -12,6 +12,11 @@ export default new Router({
       component: () => import('@/views/Home')
     },
     {
+      name: 'signup',
+      path: '/signup',
+      component: () => import('@/views/Signup')
+    },
+    {
       name: 'signin',
       path: '/signin',
       component: () => import('@/views/Signin')
@@ -27,11 +32,6 @@ export default new Router({
       component: () => import('@/views/Signout')
     },
     {
-      name: 'signup',
-      path: '/signup',
-      component: () => import('@/views/Signup')
-    },
-    {
       name: 'forgot_password',
       path: '/forgot_password',
       component: () => import('@/views/ForgotPassword')
@@ -39,12 +39,20 @@ export default new Router({
     {
       name: 'reset_password',
       path: '/reset_password',
-      component: () => import('@/views/ResetPassword')
+      component: () => import('@/views/ResetPassword'),
+      props: route => ({
+        email: route.query.email,
+        reset_password_token: route.query.reset_password_token
+      })
     },
     {
       name: 'confirm_email',
       path: '/confirm_email',
-      component: () => import('@/views/ConfirmEmail')
+      component: () => import('@/views/ConfirmEmail'),
+      props: route => ({
+        email: route.query.email,
+        confirm_email_token: route.query.confirm_email_token
+      })
     },
     {
       name: 'account',
