@@ -16,7 +16,7 @@
               <input
                 class="form-control form-control-lg"
                 type="text"
-                v-model="firstName"
+                v-model="currentUser.FirstName"
                 placeholder="First name"
               />
             </fieldset>
@@ -25,7 +25,7 @@
               <input
                 class="form-control form-control-lg"
                 type="text"
-                v-model="lastName"
+                v-model="currentUser.LastName"
                 placeholder="Last name"
               />
             </fieldset>
@@ -34,7 +34,7 @@
               <input
                 class="form-control form-control-lg"
                 type="text"
-                v-model="username"
+                v-model="currentUser.Username"
                 placeholder="Username"
               />
             </fieldset>
@@ -43,10 +43,10 @@
               <input
                 class="form-control form-control-lg"
                 type="email"
-                v-model="email"
+                v-model="currentUser.Email"
                 placeholder="Email"
               />
-              <div v-if="isConfirmedEmail">
+              <div v-if="currentUser.IsConfirmedEmail">
                 Email confirmed.
               </div>
               <div v-else>
@@ -106,22 +106,10 @@ export default {
   },
   data() {
     return {
-      firstName: null,
-      lastName: null,
-      username: null,
-      email: null,
-      isConfirmedEmail: null,
       password: null,
       isConfirmEmailSent: false,
       isUserUpdated: false
     };
-  },
-  mounted() {
-    this.firstName = this.currentUser.FirstName;
-    this.lastName = this.currentUser.LastName;
-    this.username = this.currentUser.Username;
-    this.email = this.currentUser.Email;
-    this.isConfirmedEmail = this.currentUser.IsConfirmedEmail;
   },
   computed: {
     ...mapGetters(['currentUser']),
@@ -131,22 +119,13 @@ export default {
   },
   methods: {
     onSubmit() {
-      var submitPayload = {};
-      if (this.firstName !== this.currentUser.FirstName) {
-        submitPayload.first_name = this.firstName;
-      }
-      if (this.lastName !== this.currentUser.LastName) {
-        submitPayload.last_name = this.lastName;
-      }
-      if (this.username !== this.currentUser.Username) {
-        submitPayload.username = this.username;
-      }
-      if (this.email !== this.currentUser.Email) {
-        submitPayload.email = this.email;
-      }
-      if (this.password !== '') {
-        submitPayload.password = this.password;
-      }
+      var submitPayload = {
+        first_name: this.currentUser.FirstName,
+        last_name: this.currentUser.LastName,
+        username: this.currentUser.Username,
+        email: this.currentUser.Email,
+        password: this.password
+      };
       this.$store.dispatch(UPDATE_USER, submitPayload).then(() => {
         this.isUserUpdated = true;
         this.$store.dispatch(CHECK_AUTH);
