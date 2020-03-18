@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import store from '@/store';
 
 export default {
@@ -17,6 +18,14 @@ export default {
   beforeRouteEnter(to, from, next) {
     if (store.state.auth.isAuthenticated) next();
     else next({ name: 'home' });
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated'])
+  },
+  watch: {
+    isAuthenticated(newValue) {
+      if (!newValue) this.$router.push({ name: 'home' });
+    }
   }
 };
 </script>

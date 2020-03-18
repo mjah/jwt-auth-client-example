@@ -1,6 +1,9 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav
+      class="navbar navbar-expand-md navbar-dark fixed-top"
+      :class="[!!isAuthenticated ? 'acc-bb-green' : 'acc-bb-red']"
+    >
       <div class="container">
         <router-link class="navbar-brand" :to="{ name: 'home' }">
           JWT Auth Client Example
@@ -76,6 +79,18 @@
     </nav>
   </header>
 </template>
+
+<style scoped>
+nav {
+  background-color: rgb(10, 10, 10);
+}
+.acc-bb-green {
+  border-bottom: 1px solid rgb(0, 255, 0);
+}
+.acc-bb-red {
+  border-bottom: 1px solid rgb(255, 0, 0);
+}
+</style>
 
 <script>
 import { mapGetters } from 'vuex';

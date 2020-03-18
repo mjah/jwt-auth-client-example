@@ -27,7 +27,7 @@
                 placeholder="Email"
               />
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <button class="btn btn-lg btn-primary">
               Send Reset Password Link
             </button>
           </form>

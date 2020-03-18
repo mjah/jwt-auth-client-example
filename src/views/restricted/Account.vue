@@ -69,27 +69,33 @@
                 placeholder="Password"
               />
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <button class="btn btn-lg btn-primary">
               Update
             </button>
           </form>
-          <button
-            @click="deleteUser"
-            class="btn btn-lg btn-danger pull-xs-right"
-          >
-            Delete Account
-          </button>
-          <button
-            @click="signoutEverywhere"
-            class="btn btn-lg btn-warning pull-xs-right"
+          <router-link
+            class="btn btn-lg btn-warning"
+            :to="{ name: 'signout_all' }"
           >
             Signout Everywhere
+          </router-link>
+          <button @click="deleteUser" class="btn btn-lg btn-danger">
+            Delete Account
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.btn {
+  display: block;
+  clear: both;
+  margin-top: 10px;
+  width: 100%;
+}
+</style>
 
 <script>
 import { mapGetters } from 'vuex';
@@ -99,8 +105,7 @@ import {
   UPDATE_USER,
   CHECK_AUTH,
   SEND_CONFIRM_EMAIL,
-  DELETE_USER,
-  SIGNOUT_ALL
+  DELETE_USER
 } from '@/store/actions.type';
 
 export default {
@@ -117,10 +122,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentUser']),
+    ...mapGetters(['currentUser', 'isAuthenticated']),
     ...mapState({
       errors: state => state.auth.errors
     })
+  },
+  watch: {
+    isAuthenticated(newValue) {
+      if (!newValue) this.$router.push({ name: 'home' });
+    }
   },
   methods: {
     onSubmit() {
@@ -147,11 +157,6 @@ export default {
     deleteUser() {
       this.$store
         .dispatch(DELETE_USER)
-        .then(() => this.$router.push({ name: 'home' }));
-    },
-    signoutEverywhere() {
-      this.$store
-        .dispatch(SIGNOUT_ALL)
         .then(() => this.$router.push({ name: 'home' }));
     }
   }

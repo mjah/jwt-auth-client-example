@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <div class="container page">
-      <h1 class="title">JWT Auth Client Example</h1>
+      <h1 class="title">Home page.</h1>
     </div>
   </div>
 </template>

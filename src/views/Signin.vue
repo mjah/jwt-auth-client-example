@@ -39,7 +39,7 @@
               />
               <label for="remember_me">Remember me</label>
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <button class="btn btn-lg btn-primary">
               Sign in
             </button>
           </form>
