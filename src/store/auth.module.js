@@ -51,8 +51,7 @@ const actions = {
         .then(response => {
           context.commit(SET_USER, response.data.details);
         })
-        .catch(error => {
-          context.commit(SET_ERROR, error.response.data.error);
+        .catch(() => {
           context.commit(PURGE_AUTH);
         });
     } else {
@@ -67,7 +66,9 @@ const actions = {
           resolve(response);
         })
         .catch(error => {
-          context.commit(SET_ERROR, error.response.data.error);
+          if (!error.response)
+            context.commit(SET_ERROR, 'Signup currently unavailable.');
+          else context.commit(SET_ERROR, error.response.data.error);
         });
     });
   },
@@ -80,7 +81,9 @@ const actions = {
           resolve(response);
         })
         .catch(error => {
-          context.commit(SET_ERROR, error.response.data.error);
+          if (!error.response)
+            context.commit(SET_ERROR, 'Signin currently unavailable.');
+          else context.commit(SET_ERROR, error.response.data.error);
         });
     });
   },
@@ -187,8 +190,10 @@ const actions = {
 const mutations = {
   [SET_ERROR](state, error) {
     if (error === null) state.errors = null;
-    else if (typeof error.Description !== 'undefined')
+    else if (typeof error === 'string') state.errors = [error];
+    else if (typeof error.Description === 'string')
       state.errors = [error.Description];
+    else if (typeof error === 'object') state.errors = error;
     else state.errors = ['An error has occurred.'];
   },
   [SET_ACCESS_TOKEN](state, accessToken) {

@@ -1,13 +1,13 @@
 <template>
   <div class="auth-page">
     <div class="container page">
-      <ul v-if="errors" class="error-messages">
-        <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
-      </ul>
       <div v-if="isJustConfirmed">
         <p>Your email has been confirmed.</p>
       </div>
       <div v-else>
+        <ul v-if="errors" class="error-messages">
+          <li v-for="(v, k) in errors" :key="k">{{ v }}</li>
+        </ul>
         <p>Your email has not been confirmed.</p>
       </div>
     </div>
